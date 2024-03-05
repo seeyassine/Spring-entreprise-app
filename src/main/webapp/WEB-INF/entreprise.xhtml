@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+   <title>Gestion Entreprise</title>
+
+   <!-- Include Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+</h:head>
+
+<h:body>
+   <div class="container">
+      <h1 class="text-center">Gestion des Entreprises</h1>
+      <hr />
+
+      <!-- Form for adding/editing filiere -->
+      <div class="col-md-6 offset-md-3 mt-4">
+         <h:form>
+            <fieldset>
+               <legend>${entrepriseBean.label} d'une entreprise</legend>
+
+               <div class="form-group">
+                  <label for="id">ID</label>
+                  <h:inputText id="id" value="#{entrepriseBean.entreprise.id}" styleClass="form-control" readonly="true"/>
+               </div>
+
+               <div class="form-group">
+                  <label for="nom">Nom</label>
+                  <h:inputText id="nom" value="#{entrepriseBean.entreprise.nom}" styleClass="form-control"/>
+               </div>
+
+               <div class="form-group">
+                  <label for="ville">Ville</label>
+                  <h:inputText id="ville" value="#{entrepriseBean.entreprise.ville}" styleClass="form-control"/>
+               </div>
+
+               <div class="form-group">
+                  <label for="tel">tel</label>
+                  <h:inputText id="tel" value="#{entrepriseBean.entreprise.tel}" styleClass="form-control"/>
+               </div>
+
+               <div class="text-right">
+                  <h:commandButton action="#{entrepriseBean.save()}" value="${entrepriseBean.label}" styleClass="btn btn-primary"/>
+               </div>
+            </fieldset>
+         </h:form>
+      </div>
+
+      <!-- Table for displaying filieres -->
+      <div class="col-md-8 offset-md-2 mt-4">
+         <h:form>
+            <table class="table table-bordered table-striped text-center">
+               <thead>
+               <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Ville</th>
+                  <th>tel</th>
+                  <th>Modifier</th>
+                  <th>Supprimer</th>
+               </tr>
+               </thead>
+               <tbody>
+               <ui:repeat value="${entrepriseBean.entreprises}" var="f">
+                  <tr>
+                     <td>${f.id}</td>
+                     <td>${f.nom}</td>
+                     <td>${f.ville}</td>
+                     <td>${f.tel}</td>
+                     <td>
+                        <h:commandLink action="#{entrepriseBean.modify(f)}" styleClass="btn btn-warning">
+                           Edit
+                        </h:commandLink>
+                     </td>
+                     <td>
+                        <h:commandLink action="#{entrepriseBean.delete(f)}" onclick="return confirm('Are you sure ? ')" styleClass="btn btn-danger">
+                           Delete
+                        </h:commandLink>
+                     </td>
+                  </tr>
+               </ui:repeat>
+               </tbody>
+               <tfoot>
+               <tr>
+                  <td colspan="5" class="text-center">
+                     Nombre total des entreprises est : ${entrepriseBean.entreprises.size()}
+                  </td>
+               </tr>
+               </tfoot>
+            </table>
+         </h:form>
+      </div>
+   </div>
+
+</h:body>
+
+</html>
